@@ -1,4 +1,3 @@
-import { text } from 'express'
 import { CollectionConfig } from 'payload/types'
 
 const Pages: CollectionConfig = {
