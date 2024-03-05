@@ -1,5 +1,6 @@
 import express from 'express'
 import payload from 'payload'
+import cors from "cors"
 
 require('dotenv').config()
 const app = express()
@@ -8,6 +9,14 @@ const app = express()
 app.get('/', (_, res) => {
   res.redirect('/admin')
 })
+
+var corsOptions = {
+  origin: process.env.CORS_PERMISSION,
+  credentials: true,
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 
 const start = async () => {
   // Initialize Payload
@@ -21,7 +30,7 @@ const start = async () => {
 
   // Add your own express routes here
 
-  app.listen(3000)
+  app.listen(3001)
 }
 
 start()

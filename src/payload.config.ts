@@ -5,9 +5,11 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-imp
 import { webpackBundler } from '@payloadcms/bundler-webpack' // bundler-import
 import { slateEditor } from '@payloadcms/richtext-slate' // editor-import
 import { buildConfig } from 'payload/config'
+import payload from 'payload'
 
 import Users from './collections/Users'
 import Pages from './collections/Pages'
+import Media from './collections/Media'
 
 export default buildConfig({
   admin: {
@@ -15,7 +17,7 @@ export default buildConfig({
     bundler: webpackBundler(), // bundler-config
   },
   editor: slateEditor({}), // editor-config
-  collections: [Pages, Users],
+  collections: [Pages, Media ,Users],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
@@ -27,5 +29,24 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
-  // database-adapter-config-end
+
+  cors: process.env.CORS_PERMISSION?.split(',') ?? [],
+  endpoints: [
+    {
+      root: true,
+      method: "get",
+      path: "/api/pages-pages/:slug",
+      handler: async (req, res) => {
+        const slug = req.params.slug;
+
+        const response = await payload.find({
+          collection: "pages",
+          where: {
+            slug: { like: slug }
+          }
+        })
+        res.status(200).json(response);
+      },
+    },
+  ],
 })
