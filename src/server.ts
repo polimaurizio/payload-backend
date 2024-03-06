@@ -10,12 +10,13 @@ app.get('/', (_, res) => {
   res.redirect('/admin')
 })
 
-var corsOptions = {
-  origin: process.env.CORS_PERMISSION,
-  optionsSuccessStatus: 200
-}
+// var corsOptions = {
+//   origin: process.env.CORS_PERMISSION,
+//   credentials: true,
+//   optionsSuccessStatus: 200
+// }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 const start = async () => {
   // Initialize Payload
