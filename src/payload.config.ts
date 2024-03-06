@@ -30,7 +30,7 @@ export default buildConfig({
     url: process.env.DATABASE_URI,
   }),
 
-  // cors: process.env.CORS_PERMISSION?.split(',') ?? [],
+  cors: process.env.CORS_PERMISSION?.split(',') ?? [],
   endpoints: [
     {
       root: true,
