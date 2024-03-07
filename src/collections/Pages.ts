@@ -10,8 +10,8 @@ const Pages: CollectionConfig = {
     defaultColumns: ["title", "slug"],
     useAsTitle: "title",
   },
-  access: {
-    read: () => true,
+  versions: {
+    drafts: true,
   },
   fields: [
     {
@@ -26,6 +26,9 @@ const Pages: CollectionConfig = {
           name: "slug",
           type: "text",
           required: true,
+          admin: {
+            description: "Titolo pagina in minuscolo e con - al posto degli spazi!"
+          }
         },
       ],
     },

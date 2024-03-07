@@ -12,6 +12,7 @@ app.get('/', (_, res) => {
 
 var corsOptions = {
   origin: process.env.CORS_PERMISSION,
+  credentials: true,
   optionsSuccessStatus: 200
 }
 

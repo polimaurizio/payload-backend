@@ -10,6 +10,8 @@ import payload from 'payload'
 import Users from './collections/Users'
 import Pages from './collections/Pages'
 import Media from './collections/Media'
+import Nav from './globals/Nav'
+import Footer from './globals/Footer'
 
 export default buildConfig({
   admin: {
@@ -18,6 +20,7 @@ export default buildConfig({
   },
   editor: slateEditor({}), // editor-config
   collections: [Pages, Media ,Users],
+  globals: [Nav, Footer],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
@@ -42,8 +45,26 @@ export default buildConfig({
         const response = await payload.find({
           collection: "pages",
           where: {
-            slug: { like: slug }
+            and: [
+              {
+                slug: { like: slug }
+              },
+              {
+                _status: { equals: 'published'}
+              }
+            ]
           }
+        })
+        res.status(200).json(response);
+      },
+    },
+    {
+      root: true,
+      method: "get",
+      path: "/api/globals-data/footer",
+      handler: async (req, res) => {
+        const response = await payload.findGlobal({
+          slug: "footer",
         })
         res.status(200).json(response);
       },
