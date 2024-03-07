@@ -54,7 +54,7 @@ export default buildConfig({
           where: {
             and: [
               {
-                slug: { like: slug }
+                slug: { equals: slug }
               },
               {
                 _status: { equals: 'published'}
