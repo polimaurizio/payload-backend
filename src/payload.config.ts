@@ -12,6 +12,7 @@ import Pages from './collections/Pages'
 import Media from './collections/Media'
 import Nav from './globals/Nav'
 import Footer from './globals/Footer'
+import seoPlugin from '@payloadcms/plugin-seo';
 
 export default buildConfig({
   admin: {
@@ -27,7 +28,13 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
-  plugins: [payloadCloud()],
+  plugins: [payloadCloud(), seoPlugin({
+    collections: [
+      'pages',
+    ],
+    uploadsCollection: 'media',
+  })
+],
   // database-adapter-config-start
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
@@ -54,17 +61,6 @@ export default buildConfig({
               }
             ]
           }
-        })
-        res.status(200).json(response);
-      },
-    },
-    {
-      root: true,
-      method: "get",
-      path: "/api/globals-data/footer",
-      handler: async (req, res) => {
-        const response = await payload.findGlobal({
-          slug: "footer",
         })
         res.status(200).json(response);
       },
